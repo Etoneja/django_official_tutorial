@@ -7,13 +7,26 @@
 <body>
 
 <h1>{{ question.question_text }}</h1>
-<ul>
-    {% for answer in question.answer_set.all %}
-        <li>
-            {{ answer.choice_text }}
-        </li>
-    {% endfor %}
-</ul>
+
+{% if error_message %}
+    {{ error_message }}
+{% endif %}
+
+<form method="post" action="{% url 'polls:vote' question.id %}" id="my_form">
+
+    {% csrf_token %}
+    <ul>
+        {% for answer in question.answer_set.all %}
+            <li>
+                <input type="radio" id="answer_{{ answer.id }}" name="answer_id" value="{{ answer.id }}">
+                <label for="answer_{{ answer.id }}">{{ answer.choice_text }}</label>
+            </li>
+        {% endfor %}
+    </ul>
+    <button type="submit" form="my_form" value="Submit">Submit</button>
+
+</form>
+
 
 </body>
 </html>

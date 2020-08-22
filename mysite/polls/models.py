@@ -6,10 +6,10 @@ from datetime import timedelta
 
 class Question(models.Model):
     question_text = models.CharField(max_length=255)
-    pub_date = models.DateTimeField('date_published')
+    pub_date = models.DateTimeField('date_published', default=timezone.now())
 
     def __str__(self):
-        return self.question_text
+        return f"{self.id} - {self.question_text}"
 
     def was_published_recently(self):
         return self.pub_date >= timezone.now() - timedelta(days=1)

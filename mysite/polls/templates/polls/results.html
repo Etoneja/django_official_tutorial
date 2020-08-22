@@ -1,0 +1,21 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+
+<h3>Question: {{ question.question_text }}</h3>
+
+{% if question.answer_set.exists %}
+    <ul>
+        {% for answer in question.answer_set.all %}
+            <li>
+                {{ answer.choice_text }} - <b>{{ answer.votes }} vote{{ answer.votes|pluralize }}</b>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    No answers
+{% endif %}
+
+<a href="{% url 'polls:details' question.id %}">Vote again?</a>
+
+{% endblock content %}

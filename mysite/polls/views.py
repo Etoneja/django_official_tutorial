@@ -1,9 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
-from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.utils import timezone
 from django.views import generic
 
 from .models import Question
@@ -11,27 +10,20 @@ from .models import Question
 
 class IndexView(generic.ListView):
     template_name = "polls/index.html"
-
-    def get_queryset(self):
-        return Question.objects.filter(
-          pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+    paginate_by = 2
+    queryset = Question.published.all()
 
 
 class DetailsView(generic.DetailView):
     template_name = "polls/details.html"
     model = Question
-
-    def get_queryset(self):
-        return Question.objects.filter(pub_date__lte=timezone.now())
+    queryset = Question.published.all()
 
 
 class ResultsView(generic.DetailView):
     template_name = "polls/results.html"
     model = Question
-
-    def get_queryset(self):
-        return Question.objects.filter(pub_date__lte=timezone.now())
+    queryset = Question.published.all()
 
 
 def vote(request, question_id):

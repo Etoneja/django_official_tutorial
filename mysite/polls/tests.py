@@ -53,6 +53,7 @@ class QuestionIndexViewTests(TestCase):
         response = self.client.get(self.url_index)
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "No questions")
+        self.assertTemplateUsed(response, "polls/index.html")
         self.assertQuerysetEqual(
             response.context["question_list"], []
         )

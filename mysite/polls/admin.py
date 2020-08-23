@@ -10,19 +10,24 @@ class AnswersInline(admin.TabularInline):
     extra = 2
 
 
+@admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
 
     fieldsets = [
-        (None, {"fields": ["question_text"]}),
+        (None, {"fields": ["question_text", "slug"]}),
         ("Published date", {"fields": ["pub_date"]}),
     ]
     inlines = [AnswersInline]
     list_display = (
-        "question_text", "pub_date", "was_published_recently"
+        "id", "question_text", "slug", "pub_date", "was_published_recently"
     )
     list_filter = ["pub_date"]
     search_fields = ["question_text"]
+    prepopulated_fields = {"slug": ("question_text", )}
 
 
-admin.site.register(Question, QuestionAdmin)
-admin.site.register(Answer)
+@admin.register(Answer)
+class AnswerAdmin(admin.ModelAdmin):
+
+    raw_id_fields = ("question", )
+

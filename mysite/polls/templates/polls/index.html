@@ -2,10 +2,11 @@
 
 {% block content %}
 
+<h3>Main Page</h3>
 {% if question_list %}
-    <ul>
+    <ul class="list-group mb-3">
     {% for question in question_list %}
-        <li>
+        <li class="list-group-item">
             <a href="{{ question.get_absolute_url }}">{{ question.question_text }}</a>
         </li>
     {% endfor %}

@@ -8,7 +8,24 @@
     <title>Polls app</title>
 </head>
 <body>
+
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/polls">Home</a></li>
+    {% block breadcrumb %}
+    {% endblock %}
+  </ol>
+</nav>
+
+<div class="jumbotron">
+  <h1 class="display-4">Polls app!</h1>
+  <p class="lead">Django official tutorial app</p>
+</div>
+
+
+<div class="container">
 {% block content %}
 {% endblock content %}
+</div>
 </body>
 </html>
